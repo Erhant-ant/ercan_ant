@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../features/home/presentation/home_page.dart';
 import 'theme/app_theme.dart';
 
 class ErcanAntApp extends StatelessWidget {
@@ -10,14 +11,7 @@ class ErcanAntApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Ercan Ant',
       theme: AppTheme.lightTheme,
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'Ercan Ant',
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+      home: const HomePage(),
     );
   }
 }
