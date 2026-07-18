@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_typography.dart';
+import 'components/button_theme.dart';
 
 class AppTheme {
   AppTheme._();
@@ -26,5 +27,8 @@ class AppTheme {
       bodySmall: AppTypography.bodySmall,
       labelLarge: AppTypography.labelLarge,
     ),
+
+    filledButtonTheme: AppButtonTheme.filledButtonTheme,
+    outlinedButtonTheme: AppButtonTheme.outlinedButtonTheme,
   );
 }
