@@ -9,19 +9,32 @@ class HeroBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: DecoratedBox(
+      child: Container(
+        width: 340,
+        height: 500,
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(AppRadius.xl),
           boxShadow: AppShadows.large,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.xl),
-          child: Container(
-            width: 300,
-            height: 450,
-            color: Colors.grey.shade200,
-            child: const Center(child: Icon(Icons.menu_book_rounded, size: 80)),
-          ),
+        // Şimdilik placeholder gösteriyoruz.
+        // Gerçek kitap kapağı eklendiğinde bu içerik Image.asset ile değiştirilecek.
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.auto_stories_rounded, size: 90),
+
+            SizedBox(height: 20),
+
+            Text(
+              'Yakında',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 8),
+
+            Text('Kitap kapağı burada yer alacak.'),
+          ],
         ),
       ),
     );

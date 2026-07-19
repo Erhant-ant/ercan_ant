@@ -9,6 +9,7 @@ class AppButtonTheme {
 
   static final filledButtonTheme = FilledButtonThemeData(
     style: FilledButton.styleFrom(
+      // Tüm FilledButton'lar aynı görünümü kullansın.
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       elevation: 0,

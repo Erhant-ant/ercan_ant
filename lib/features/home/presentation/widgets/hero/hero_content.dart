@@ -1,53 +1,56 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../app/theme/app_spacing.dart';
+import 'package:ercan_ant/app/theme/app_spacing.dart';
 
 class HeroContent extends StatelessWidget {
   const HeroContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('ERCAN ANT', style: Theme.of(context).textTheme.labelLarge),
-
-        const SizedBox(height: AppSpacing.md),
-
-        Text(
-          'Kelimelerin\nbıraktığı izleri\nkeşfedin.',
-          style: Theme.of(context).textTheme.displayLarge,
-        ),
-
-        const SizedBox(height: AppSpacing.lg),
-
-        SizedBox(
-          width: 520,
-          child: Text(
-            'Romanlar, hikâyeler ve edebi notlar ile kelimelerin dünyasına yolculuk edin.',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-        ),
-
-        const SizedBox(height: AppSpacing.xxl),
-
-        Row(
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 560),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FilledButton(
-              onPressed: () {},
-              child: const Text('Kitapları İncele'),
+            Text('ERCAN ANT', style: Theme.of(context).textTheme.labelLarge),
+
+            const SizedBox(height: AppSpacing.md),
+
+            Text(
+              'Kelimelerin\nbıraktığı izleri\nkeşfedin.',
+              style: Theme.of(context).textTheme.displayLarge,
             ),
 
-            const SizedBox(width: AppSpacing.md),
+            const SizedBox(height: AppSpacing.lg),
 
-            OutlinedButton(
-              onPressed: () {},
-              child: const Text('Yazarın Defteri'),
+            Text(
+              'Romanlar, hikâyeler ve edebi notlar ile '
+              'kelimelerin dünyasına yolculuk edin.',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+
+            const SizedBox(height: AppSpacing.xxl),
+
+            Wrap(
+              spacing: AppSpacing.md,
+              runSpacing: AppSpacing.md,
+              children: [
+                FilledButton(
+                  onPressed: () {},
+                  child: const Text('Kitapları İncele'),
+                ),
+
+                OutlinedButton(
+                  onPressed: () {},
+                  child: const Text('Yazarın Defteri'),
+                ),
+              ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
