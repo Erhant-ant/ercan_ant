@@ -1,9 +1,12 @@
 class AssetPaths {
   AssetPaths._();
 
-  static const heroBook = 'assets/books/hero_book.png';
+  // Logo
+  static const logo = 'assets/images/logo.png';
 
+  // Author
   static const author = 'assets/images/author.png';
 
-  static const logo = 'assets/images/logo.png';
+  // Hero & Books
+  static const heroBook = 'assets/books/hero_book.jpg';
 }
