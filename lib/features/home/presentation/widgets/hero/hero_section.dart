@@ -9,32 +9,43 @@ class HeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFFCFBF8), Color(0xFFFFFFFF), Color(0xFFF7F3EC)],
-        ),
-      ),
-      child: SafeArea(
-        child: Center(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // 1000 px altını tablet/mobil görünüm olarak ele alıyoruz.
+        final isMobile = constraints.maxWidth < 1000;
+
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xFFFCFBF8), Color(0xFFFFFFFF), Color(0xFFF7F3EC)],
+            ),
+          ),
           child: Padding(
-            // İçeriğin kenarlara yapışmaması için ortak spacing kullanıyoruz.
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.xxxl,
               vertical: 80,
             ),
-            child: Row(
-              children: const [
-                Expanded(flex: 6, child: HeroContent()),
-                SizedBox(width: AppSpacing.xxl),
-                Expanded(flex: 4, child: HeroBook()),
-              ],
-            ),
+            child: isMobile
+                ? const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HeroBook(),
+                      SizedBox(height: AppSpacing.xxxl),
+                      HeroContent(),
+                    ],
+                  )
+                : const Row(
+                    children: [
+                      Expanded(flex: 6, child: HeroContent()),
+                      SizedBox(width: AppSpacing.xxl),
+                      Expanded(flex: 4, child: HeroBook()),
+                    ],
+                  ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

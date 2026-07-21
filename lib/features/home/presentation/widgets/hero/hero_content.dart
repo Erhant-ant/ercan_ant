@@ -26,8 +26,7 @@ class HeroContent extends StatelessWidget {
             const SizedBox(height: AppSpacing.lg),
 
             Text(
-              'Romanlar, hikâyeler ve edebi notlar ile '
-              'kelimelerin dünyasına yolculuk edin.',
+              'Romanlar, hikâyeler ve denemeler... Her eser, okuyucusunu yeni bir yolculuğa davet eder.',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
 

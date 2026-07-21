@@ -13,8 +13,8 @@ class HeroBook extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          width: 340,
-          height: 500,
+          width: 320,
+          height: 470,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(AppRadius.xl),
