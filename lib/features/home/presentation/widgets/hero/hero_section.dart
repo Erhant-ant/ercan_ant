@@ -23,7 +23,7 @@ class HeroSection extends StatelessWidget {
             // İçeriğin kenarlara yapışmaması için ortak spacing kullanıyoruz.
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.xxxl,
-              vertical: AppSpacing.giant,
+              vertical: 80,
             ),
             child: Row(
               children: const [
