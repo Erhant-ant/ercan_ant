@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/widgets/paper_background.dart';
 import '../../../shared/layout/app_layout.dart';
 import '../../../shared/widgets/app_navbar.dart';
 import 'widgets/books/books_section.dart';
@@ -11,27 +12,29 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppLayout(
-        child: Column(
-          children: [
-            const AppNavbar(),
+      body: PaperBackground(
+        child: AppLayout(
+          child: Column(
+            children: [
+              const AppNavbar(),
 
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const HeroSection(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const HeroSection(),
 
-                    const SizedBox(height: 120),
+                      const SizedBox(height: 120),
 
-                    const BooksSection(),
+                      const BooksSection(),
 
-                    const SizedBox(height: 120),
-                  ],
+                      const SizedBox(height: 120),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
