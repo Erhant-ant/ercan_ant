@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/widgets/paper_background.dart';
-import '../../../shared/layout/app_layout.dart';
-import '../../../shared/widgets/app_navbar.dart';
+import 'package:ercan_ant/shared/widgets/app_footer.dart';
+import 'package:ercan_ant/shared/widgets/app_navbar.dart';
+
+import 'widgets/about/about_teaser.dart';
+import 'widgets/blog/blog_teaser.dart';
 import 'widgets/books/books_section.dart';
 import 'widgets/hero/hero_section.dart';
 
@@ -12,30 +14,28 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PaperBackground(
-        child: AppLayout(
-          child: Column(
-            children: [
-              const AppNavbar(),
+      body: Column(
+        children: [
+          const AppNavbar(),
 
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const HeroSection(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const HeroSection(),
 
-                      const SizedBox(height: 120),
+                  const AboutTeaser(),
 
-                      const BooksSection(),
+                  const BooksSection(),
 
-                      const SizedBox(height: 120),
-                    ],
-                  ),
-                ),
+                  const BlogTeaser(),
+
+                  const AppFooter(),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

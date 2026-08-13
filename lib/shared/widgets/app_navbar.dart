@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:ercan_ant/app/theme/app_colors.dart';
-import 'package:ercan_ant/app/theme/app_spacing.dart';
 
 class AppNavbar extends StatelessWidget {
   const AppNavbar({super.key});
@@ -31,27 +31,33 @@ class AppNavbar extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(
-                "ERCAN ANT",
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  letterSpacing: 3,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+              GestureDetector(
+                onTap: () => context.go('/'),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Text(
+                    "ERCAN ANT",
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      letterSpacing: 3,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
                 ),
               ),
 
               const Spacer(),
 
-              const _NavItem("Ana Sayfa"),
+              const _NavItem(label: "Ana Sayfa", route: '/'),
               const SizedBox(width: 8),
 
-              const _NavItem("Kitaplar"),
+              const _NavItem(label: "Kitaplar", route: '/kitaplar'),
               const SizedBox(width: 8),
 
-              const _NavItem("Yazarın Defteri"),
+              const _NavItem(label: "Yazarın Defteri", route: '/blog'),
               const SizedBox(width: 8),
 
-              const _NavItem("Hakkında"),
+              const _NavItem(label: "Hakkında", route: '/hakkinda'),
 
               const SizedBox(width: 30),
 
@@ -68,7 +74,7 @@ class AppNavbar extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => context.go('/iletisim'),
                 child: const Text("İletişim"),
               ),
             ],
@@ -80,9 +86,10 @@ class AppNavbar extends StatelessWidget {
 }
 
 class _NavItem extends StatefulWidget {
-  const _NavItem(this.title);
+  const _NavItem({required this.label, required this.route});
 
-  final String title;
+  final String label;
+  final String route;
 
   @override
   State<_NavItem> createState() => _NavItemState();
@@ -97,37 +104,40 @@ class _NavItemState extends State<_NavItem> {
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => hover = true),
       onExit: (_) => setState(() => hover = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: hover
-              ? AppColors.primary.withValues(alpha: .06)
-              : Colors.transparent,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 220),
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                fontWeight: hover ? FontWeight.w700 : FontWeight.w500,
-                color: hover ? AppColors.primary : AppColors.textSecondary,
+      child: GestureDetector(
+        onTap: () => context.go(widget.route),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: hover
+                ? AppColors.primary.withValues(alpha: .06)
+                : Colors.transparent,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 220),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontWeight: hover ? FontWeight.w700 : FontWeight.w500,
+                  color: hover ? AppColors.primary : AppColors.textSecondary,
+                ),
+                child: Text(widget.label),
               ),
-              child: Text(widget.title),
-            ),
-            const SizedBox(height: 6),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
-              width: hover ? 28 : 0,
-              height: 2,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: 6),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                width: hover ? 28 : 0,
+                height: 2,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

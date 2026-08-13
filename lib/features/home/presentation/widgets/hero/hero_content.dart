@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:ercan_ant/app/theme/app_radius.dart';
 import 'package:ercan_ant/app/theme/app_spacing.dart';
@@ -127,7 +128,7 @@ class HeroContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => context.go('/kitaplar'),
                   icon: const Icon(Icons.menu_book_rounded),
                   label: const Text("Kitapları İncele"),
                 ),
@@ -138,7 +139,7 @@ class HeroContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => context.go('/blog'),
                   icon: const Icon(Icons.edit_note_rounded),
                   label: const Text("Yazarın Defteri"),
                 ),

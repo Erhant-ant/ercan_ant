@@ -98,7 +98,7 @@ class _StoreCardState extends State<_StoreCard> {
                   BoxShadow(
                     blurRadius: 20,
                     offset: const Offset(0, 8),
-                    color: Colors.black.withOpacity(.08),
+                    color: Colors.black.withValues(alpha: .08),
                   ),
                 ]
               : [],
