@@ -193,11 +193,11 @@ class _HeroBookState extends State<HeroBook>
                             // Alt bilgi alanı
                             Expanded(
                               flex: 3,
-                              child: Padding(
+                              child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(24),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
                                       'Çok Yakında',

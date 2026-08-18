@@ -15,7 +15,6 @@ class HeroSection extends StatelessWidget {
 
         return Container(
           width: double.infinity,
-          constraints: const BoxConstraints(minHeight: 820),
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -59,22 +58,22 @@ class HeroSection extends StatelessWidget {
                       horizontal: isMobile
                           ? AppSpacing.xl
                           : AppSpacing.xxxl * 1.5,
-                      vertical: isMobile ? 80 : 120,
+                      vertical: isMobile ? 56 : 72,
                     ),
                     child: isMobile
                         ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               HeroBook(),
-                              SizedBox(height: 56),
+                              SizedBox(height: 48),
                               HeroContent(),
                             ],
                           )
                         : const Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(flex: 6, child: HeroContent()),
-                              SizedBox(width: 90),
+                              SizedBox(width: 56),
                               Expanded(flex: 5, child: HeroBook()),
                             ],
                           ),

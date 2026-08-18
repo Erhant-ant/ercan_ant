@@ -12,6 +12,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/kitaplar',
+      // extra: true sinyali HomePage'e kitaplar bölümüne scroll yapmasını söyler
       builder: (context, state) => const HomePage(),
     ),
     GoRoute(

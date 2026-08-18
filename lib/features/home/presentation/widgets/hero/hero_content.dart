@@ -88,7 +88,7 @@ class HeroContent extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
             Container(
               padding: const EdgeInsets.all(22),
@@ -115,7 +115,7 @@ class HeroContent extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: AppSpacing.xxxl),
+            const SizedBox(height: AppSpacing.xl),
 
             Wrap(
               spacing: 18,
@@ -146,7 +146,7 @@ class HeroContent extends StatelessWidget {
               ],
             ),
 
-            const SizedBox(height: 46),
+            const SizedBox(height: 28),
 
             Wrap(
               spacing: 20,
