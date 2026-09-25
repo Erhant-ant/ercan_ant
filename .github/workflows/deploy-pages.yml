@@ -31,7 +31,7 @@ jobs:
       - name: Build Flutter web app
         run: |
           flutter pub get
-          flutter build web --release --base-href "/ercan_ant/"
+          flutter build web --release --pwa-strategy=none --base-href "/ercan_ant/"
           cp build/web/index.html build/web/404.html
 
       - name: Upload Pages artifact
