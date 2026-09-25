@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:ercan_ant/app/theme/app_colors.dart';
 import 'package:ercan_ant/app/theme/app_spacing.dart';
@@ -157,6 +158,7 @@ class _BrandColumn extends StatelessWidget {
             _SocialIcon(
               icon: Icons.alternate_email_rounded,
               tooltip: 'Instagram',
+              url: 'https://www.instagram.com/ercanantt/',
             ),
             const SizedBox(width: 12),
             _SocialIcon(icon: Icons.language_rounded, tooltip: 'Twitter / X'),
@@ -168,9 +170,10 @@ class _BrandColumn extends StatelessWidget {
 }
 
 class _SocialIcon extends StatefulWidget {
-  const _SocialIcon({required this.icon, required this.tooltip});
+  const _SocialIcon({required this.icon, required this.tooltip, this.url});
   final IconData icon;
   final String tooltip;
+  final String? url;
 
   @override
   State<_SocialIcon> createState() => _SocialIconState();
@@ -187,7 +190,10 @@ class _SocialIconState extends State<_SocialIcon> {
       onExit: (_) => setState(() => _hover = false),
       child: Tooltip(
         message: widget.tooltip,
-        child: AnimatedContainer(
+        child: InkWell(
+          onTap: widget.url == null ? null : () => _openUrl(widget.url!),
+          borderRadius: BorderRadius.circular(12),
+          child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           width: 42,
           height: 42,
@@ -202,14 +208,22 @@ class _SocialIconState extends State<_SocialIcon> {
                   : Colors.white.withValues(alpha: .12),
             ),
           ),
-          child: Icon(
-            widget.icon,
-            size: 18,
-            color: _hover ? Colors.white : Colors.white54,
+            child: Icon(
+              widget.icon,
+              size: 18,
+              color: _hover ? Colors.white : Colors.white54,
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _openUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
 

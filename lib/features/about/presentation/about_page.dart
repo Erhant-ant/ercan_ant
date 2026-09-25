@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:ercan_ant/app/theme/app_colors.dart';
 import 'package:ercan_ant/app/theme/app_radius.dart';
@@ -308,6 +309,7 @@ class _HeroText extends StatelessWidget {
             _SocialChip(
               icon: Icons.alternate_email_rounded,
               label: 'Instagram',
+              url: 'https://www.instagram.com/ercanantt/',
             ),
             _SocialChip(icon: Icons.language_rounded, label: 'Twitter / X'),
           ],
@@ -318,9 +320,10 @@ class _HeroText extends StatelessWidget {
 }
 
 class _SocialChip extends StatefulWidget {
-  const _SocialChip({required this.icon, required this.label});
+  const _SocialChip({required this.icon, required this.label, this.url});
   final IconData icon;
   final String label;
+  final String? url;
 
   @override
   State<_SocialChip> createState() => _SocialChipState();
@@ -345,26 +348,37 @@ class _SocialChipState extends State<_SocialChip> {
             color: _hover ? AppColors.primary : AppColors.border,
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              widget.icon,
-              size: 16,
-              color: _hover ? Colors.white : AppColors.textSecondary,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              widget.label,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        child: InkWell(
+          onTap: widget.url == null ? null : () => _openUrl(widget.url!),
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                widget.icon,
+                size: 16,
                 color: _hover ? Colors.white : AppColors.textSecondary,
-                fontWeight: FontWeight.w600,
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Text(
+                widget.label,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: _hover ? Colors.white : AppColors.textSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _openUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
 
