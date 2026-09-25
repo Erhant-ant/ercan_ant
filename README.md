@@ -76,6 +76,20 @@ flutter build apk --release
 flutter build web --release
 ```
 
+### GitHub Pages'te yayınlama
+
+`main` dalına yapılan her push sonrasında GitHub Actions web uygulamasını otomatik olarak yayınlar.
+
+1. GitHub repository'sinde **Settings > Pages** sayfasını açın.
+2. **Build and deployment > Source** alanında **GitHub Actions** seçin.
+3. `main` dalına push yapın veya **Actions > Deploy Flutter Web to GitHub Pages > Run workflow** seçeneğini kullanın.
+
+Site adresi:
+
+```text
+https://erhant-ant.github.io/ercan_ant/
+```
+
 ## 📌 Notlar
 
 Bu repository aktif olarak geliştirilmektedir.  
