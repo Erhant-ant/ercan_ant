@@ -24,17 +24,30 @@ class BookRepository {
         isPublished: true,
 
         purchaseLinks: const [
-          PurchaseLink(storeName: 'KDY', url: 'https://kdy.amazon.com/'),
-          PurchaseLink(storeName: 'Amazon', url: 'https://amazon.com/'),
           PurchaseLink(
             storeName: 'Kitapyurdu',
-            url: 'https://www.kitapyurdu.com/',
+            url:
+                'https://www.kitapyurdu.com/kitap/zemheride-acan-nergisler/748858.html',
           ),
-          PurchaseLink(storeName: 'D&R', url: 'https://www.dr.com.tr/'),
-          PurchaseLink(storeName: 'İdefix', url: 'https://www.idefix.com/'),
+          PurchaseLink(
+            storeName: 'Amazon TR',
+            url:
+                'https://www.amazon.com.tr/s?k=Zemheride+A%C3%A7an+Nergisler+Ercan+Ant',
+          ),
+          PurchaseLink(
+            storeName: 'D&R',
+            url:
+                'https://www.dr.com.tr/search?q=Zemheride+A%C3%A7an+Nergisler+Ercan+Ant',
+          ),
+          PurchaseLink(
+            storeName: 'İdefix',
+            url:
+                'https://www.idefix.com/arama?q=Zemheride+A%C3%A7an+Nergisler+Ercan+Ant',
+          ),
           PurchaseLink(
             storeName: 'BKM Kitap',
-            url: 'https://www.bkmkitap.com/',
+            url:
+                'https://www.bkmkitap.com/arama?q=Zemheride+A%C3%A7an+Nergisler+Ercan+Ant',
           ),
         ],
       ),

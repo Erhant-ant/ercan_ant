@@ -40,10 +40,19 @@ class PurchaseDialog extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xl),
 
-              ...book.purchaseLinks.map(
-                (link) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: _StoreCard(link: link),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: book.purchaseLinks
+                        .map(
+                          (link) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: _StoreCard(link: link),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
 

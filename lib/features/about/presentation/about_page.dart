@@ -125,112 +125,106 @@ class _AuthorAvatarState extends State<_AuthorAvatar>
       builder: (context, _) {
         return Transform.translate(
           offset: Offset(0, (_ctrl.value - 0.5) * 10),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final avatarSize = constraints.maxWidth
+                  .clamp(220.0, 280.0)
+                  .toDouble();
+
+              return Stack(
+                alignment: Alignment.center,
+                children: [
               // Glow arkaplanı
-              Container(
-                width: 380,
-                height: 380,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      AppColors.primary.withValues(alpha: .18),
-                      AppColors.primary.withValues(alpha: .06),
-                      Colors.transparent,
-                    ],
-                    stops: const [.15, .5, 1],
+                  Container(
+                    width: avatarSize + 100,
+                    height: avatarSize + 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          AppColors.primary.withValues(alpha: .18),
+                          AppColors.primary.withValues(alpha: .06),
+                          Colors.transparent,
+                        ],
+                        stops: const [.15, .5, 1],
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
               // Avatar çerçevesi
-              Container(
-                width: 280,
-                height: 280,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: .3),
-                    width: 3,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: .15),
-                      blurRadius: 40,
-                      spreadRadius: 4,
-                    ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Container(
-                    color: AppColors.primary.withValues(alpha: .1),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.person_rounded,
-                          size: 110,
-                          color: AppColors.primary.withValues(alpha: .6),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'ERCAN ANT',
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
-                                color: AppColors.primary.withValues(alpha: .7),
-                                letterSpacing: 2,
-                              ),
+                  Container(
+                    width: avatarSize,
+                    height: avatarSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.primary.withValues(alpha: .3),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: .15),
+                          blurRadius: 40,
+                          spreadRadius: 4,
                         ),
                       ],
                     ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/author.jpg',
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
               // Dekoratif rozet
-              Positioned(
-                bottom: 50,
-                right: 30,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: .4),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
+                  Positioned(
+                    bottom: avatarSize * .18,
+                    right: avatarSize * .08,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.auto_stories_rounded,
-                        size: 16,
-                        color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: .4),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Yazar',
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.white,
-                          fontSize: 12,
-                          letterSpacing: 1,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.auto_stories_rounded,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Yazar',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  letterSpacing: 1,
+                                ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
         );
       },

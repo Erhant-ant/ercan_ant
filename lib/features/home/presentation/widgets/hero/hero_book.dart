@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:go_router/go_router.dart';
 
 import 'package:ercan_ant/app/theme/app_colors.dart';
 
@@ -155,7 +156,7 @@ class _HeroBookState extends State<HeroBook>
                                                     right: 24,
                                                     bottom: 30,
                                                     child: Text(
-                                                      'YENİ KİTAP',
+                                                      'İLK ROMAN',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: Theme.of(context)
@@ -202,17 +203,27 @@ class _HeroBookState extends State<HeroBook>
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'Çok Yakında',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleLarge,
+                                      'Bir Göç ve Aidiyet Hikâyesi',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.primary,
+                                            fontSize: 18,
+                                          ),
                                     ),
                                     const SizedBox(height: 8),
                                     Text(
-                                      'Yeni roman yakında okuyucularıyla buluşacak.',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyMedium,
+                                      'Ömer\'in bilinmezliğe uzanan tren yolculuğunda, umudun ve acının sessiz yankılarına tanık olun.',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            height: 1.5,
+                                            color: AppColors.textSecondary,
+                                            fontSize: 14,
+                                          ),
                                     ),
                                     const SizedBox(height: 20),
                                     FilledButton.icon(
@@ -221,17 +232,19 @@ class _HeroBookState extends State<HeroBook>
                                           double.infinity,
                                           52,
                                         ),
+                                        backgroundColor: AppColors.primary,
+                                        foregroundColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             14,
                                           ),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () => context.go('/kitaplar'),
                                       icon: const Icon(
                                         Icons.menu_book_outlined,
                                       ),
-                                      label: const Text("Detayları Gör"),
+                                      label: const Text('Hikâyeyi Keşfet'),
                                     ),
                                   ],
                                 ),
