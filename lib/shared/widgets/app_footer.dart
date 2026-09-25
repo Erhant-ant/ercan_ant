@@ -361,21 +361,32 @@ class _CopyrightRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final copyright = Text(
           '© 2026 Ercan Ant. Tüm hakları saklıdır.',
           style: theme.textTheme.bodySmall?.copyWith(color: Colors.white30),
-        ),
-        Text(
+        );
+        final tagline = Text(
           'Kelimelerin bıraktığı izler',
           style: theme.textTheme.bodySmall?.copyWith(
             color: Colors.white.withValues(alpha: .2),
             fontStyle: FontStyle.italic,
           ),
-        ),
-      ],
+        );
+
+        if (constraints.maxWidth < 800) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [copyright, const SizedBox(height: 8), tagline],
+          );
+        }
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [copyright, tagline],
+        );
+      },
     );
   }
 }

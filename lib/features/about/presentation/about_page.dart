@@ -134,7 +134,7 @@ class _AuthorAvatarState extends State<_AuthorAvatar>
               return Stack(
                 alignment: Alignment.center,
                 children: [
-              // Glow arkaplanı
+                  // Glow arkaplanı
                   Container(
                     width: avatarSize + 100,
                     height: avatarSize + 100,
@@ -151,7 +151,7 @@ class _AuthorAvatarState extends State<_AuthorAvatar>
                     ),
                   ),
 
-              // Avatar çerçevesi
+                  // Avatar çerçevesi
                   Container(
                     width: avatarSize,
                     height: avatarSize,
@@ -178,7 +178,7 @@ class _AuthorAvatarState extends State<_AuthorAvatar>
                     ),
                   ),
 
-              // Dekoratif rozet
+                  // Dekoratif rozet
                   Positioned(
                     bottom: avatarSize * .18,
                     right: avatarSize * .08,
@@ -209,9 +209,7 @@ class _AuthorAvatarState extends State<_AuthorAvatar>
                           const SizedBox(width: 6),
                           Text(
                             'Yazar',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
+                            style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
                                   color: Colors.white,
                                   fontSize: 12,
