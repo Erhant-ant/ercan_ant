@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:ercan_ant/app/theme/app_colors.dart';
+
 class HeroBook extends StatefulWidget {
   const HeroBook({super.key});
 
@@ -81,7 +83,7 @@ class _HeroBookState extends State<HeroBook>
                       width: 340,
                       height: 500,
                       decoration: BoxDecoration(
-                        color: const Color(0xffFBF7F0),
+                        color: AppColors.surface,
                         borderRadius: BorderRadius.circular(22),
                         boxShadow: [
                           BoxShadow(
@@ -119,7 +121,7 @@ class _HeroBookState extends State<HeroBook>
                                                   end: Alignment.bottomRight,
                                                   colors: [
                                                     primary,
-                                                    const Color(0xff2D4059),
+                                                    AppColors.bookCoverDark,
                                                   ],
                                                 ),
                                               ),

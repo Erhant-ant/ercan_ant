@@ -11,6 +11,12 @@ class AppColors {
   static const Color background = Color(0xFFF5EEDC);
   static const Color backgroundSecondary = Color(0xFFEFE4CF);
 
+  // Gradient Colors (Daha önce hardcoded olan değerler)
+  static const Color gradientStart = Color(0xffFCF8F1);
+  static const Color gradientMiddle = Color(0xffF8F3EB);
+  static const Color gradientEnd = Color(0xffF3ECE2);
+  static const Color bookCoverDark = Color(0xff2D4059);
+
   // Surfaces
   static const Color surface = Color(0xFFFBF7EF);
   static const Color surfaceVariant = Color(0xFFF2E9D7);

@@ -6,29 +6,35 @@ import 'package:ercan_ant/app/theme/app_radius.dart';
 import 'package:ercan_ant/app/theme/app_spacing.dart';
 import 'package:ercan_ant/features/blog/data/blog_repository.dart';
 import 'package:ercan_ant/features/blog/domain/blog_post.dart';
+import 'package:ercan_ant/shared/utils/date_extensions.dart';
 import 'package:ercan_ant/shared/widgets/app_footer.dart';
 import 'package:ercan_ant/shared/widgets/app_navbar.dart';
 
-class BlogDetailPage extends StatelessWidget {
+class BlogDetailPage extends StatefulWidget {
   const BlogDetailPage({super.key, required this.postId});
 
   final String postId;
 
-  String _formatDate(DateTime date) {
-    const months = [
-      'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
+  @override
+  State<BlogDetailPage> createState() => _BlogDetailPageState();
+}
+
+class _BlogDetailPageState extends State<BlogDetailPage> {
+  late final List<BlogPost> _posts;
+  BlogPost? _post;
+
+  @override
+  void initState() {
+    super.initState();
+    _posts = const BlogRepository().getPosts();
+    _post = _posts.where((p) => p.id == widget.postId).firstOrNull;
   }
 
   @override
   Widget build(BuildContext context) {
-    final posts = const BlogRepository().getPosts();
-    final BlogPost? post = posts.where((p) => p.id == postId).firstOrNull;
     final theme = Theme.of(context);
 
-    if (post == null) {
+    if (_post == null) {
       return Scaffold(
         body: Column(
           children: [
@@ -38,9 +44,16 @@ class BlogDetailPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.article_outlined, size: 64, color: AppColors.border),
+                    Icon(
+                      Icons.article_outlined,
+                      size: 64,
+                      color: AppColors.border,
+                    ),
                     const SizedBox(height: 20),
-                    Text('Yazı bulunamadı.', style: theme.textTheme.headlineMedium),
+                    Text(
+                      'Yazı bulunamadı.',
+                      style: theme.textTheme.headlineMedium,
+                    ),
                     const SizedBox(height: 16),
                     FilledButton(
                       onPressed: () => context.go('/blog'),
@@ -55,8 +68,12 @@ class BlogDetailPage extends StatelessWidget {
       );
     }
 
+    final post = _post!;
     // İlgili yazılar (aynı kategoriden, kendisi hariç)
-    final related = posts.where((p) => p.id != post.id && p.category == post.category).take(2).toList();
+    final related = _posts
+        .where((p) => p.id != post.id && p.category == post.category)
+        .take(2)
+        .toList();
 
     return Scaffold(
       body: Column(
@@ -81,7 +98,10 @@ class BlogDetailPage extends StatelessWidget {
                             // Geri butonu
                             TextButton.icon(
                               onPressed: () => context.go('/blog'),
-                              icon: const Icon(Icons.arrow_back_rounded, size: 18),
+                              icon: const Icon(
+                                Icons.arrow_back_rounded,
+                                size: 18,
+                              ),
                               label: const Text('Yazarın Defteri\'ne Dön'),
                               style: TextButton.styleFrom(
                                 foregroundColor: AppColors.textSecondary,
@@ -93,11 +113,18 @@ class BlogDetailPage extends StatelessWidget {
 
                             // Kategori
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 6,
+                              ),
                               decoration: BoxDecoration(
                                 color: AppColors.primary.withValues(alpha: .08),
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: AppColors.primary.withValues(alpha: .15)),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(
+                                    alpha: .15,
+                                  ),
+                                ),
                               ),
                               child: Text(
                                 post.category,
@@ -128,7 +155,11 @@ class BlogDetailPage extends StatelessWidget {
                                 const CircleAvatar(
                                   radius: 18,
                                   backgroundColor: AppColors.primary,
-                                  child: Icon(Icons.person_rounded, size: 18, color: Colors.white),
+                                  child: Icon(
+                                    Icons.person_rounded,
+                                    size: 18,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 const SizedBox(width: 12),
                                 Column(
@@ -136,16 +167,18 @@ class BlogDetailPage extends StatelessWidget {
                                   children: [
                                     Text(
                                       'Ercan Ant',
-                                      style: theme.textTheme.labelLarge?.copyWith(
-                                        color: AppColors.textPrimary,
-                                        letterSpacing: .5,
-                                      ),
+                                      style: theme.textTheme.labelLarge
+                                          ?.copyWith(
+                                            color: AppColors.textPrimary,
+                                            letterSpacing: .5,
+                                          ),
                                     ),
                                     Text(
-                                      '${_formatDate(post.date)}  ·  ${post.readingMinutes} dk okuma',
-                                      style: theme.textTheme.bodySmall?.copyWith(
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      '${post.date.toTurkishFormat()}  ·  ${post.readingMinutes} dk okuma',
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -160,7 +193,9 @@ class BlogDetailPage extends StatelessWidget {
                             const SizedBox(height: 48),
 
                             // İçerik
-                            ...post.content.trim().split('\n\n').map((paragraph) {
+                            ...post.content.trim().split('\n\n').map((
+                              paragraph,
+                            ) {
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 28),
                                 child: Text(
@@ -180,33 +215,46 @@ class BlogDetailPage extends StatelessWidget {
                               padding: const EdgeInsets.all(28),
                               decoration: BoxDecoration(
                                 color: AppColors.primary.withValues(alpha: .05),
-                                borderRadius: BorderRadius.circular(AppRadius.xl),
-                                border: Border.all(color: AppColors.primary.withValues(alpha: .12)),
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.xl,
+                                ),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(
+                                    alpha: .12,
+                                  ),
+                                ),
                               ),
                               child: Row(
                                 children: [
                                   const CircleAvatar(
                                     radius: 28,
                                     backgroundColor: AppColors.primary,
-                                    child: Icon(Icons.person_rounded, size: 28, color: Colors.white),
+                                    child: Icon(
+                                      Icons.person_rounded,
+                                      size: 28,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'Ercan Ant',
-                                          style: theme.textTheme.titleLarge?.copyWith(
-                                            fontWeight: FontWeight.w700,
-                                          ),
+                                          style: theme.textTheme.titleLarge
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w700,
+                                              ),
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
                                           'Yazar · Roman · Hikâye',
-                                          style: theme.textTheme.bodySmall?.copyWith(
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: theme.textTheme.bodySmall
+                                              ?.copyWith(
+                                                color: AppColors.textSecondary,
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -214,9 +262,14 @@ class BlogDetailPage extends StatelessWidget {
                                   FilledButton(
                                     onPressed: () => context.go('/hakkinda'),
                                     style: FilledButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 14,
+                                      ),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(AppRadius.md),
+                                        borderRadius: BorderRadius.circular(
+                                          AppRadius.md,
+                                        ),
                                       ),
                                     ),
                                     child: const Text('Hakkında'),
@@ -235,10 +288,12 @@ class BlogDetailPage extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 28),
-                              ...related.map((p) => Padding(
-                                    padding: const EdgeInsets.only(bottom: 16),
-                                    child: _RelatedPostTile(post: p),
-                                  )),
+                              ...related.map(
+                                (p) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: _RelatedPostTile(post: p),
+                                ),
+                              ),
                             ],
                           ],
                         ),
@@ -280,10 +335,14 @@ class _RelatedPostTileState extends State<_RelatedPostTile> {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: _hover ? AppColors.primary.withValues(alpha: .04) : AppColors.surface,
+            color: _hover
+                ? AppColors.primary.withValues(alpha: .04)
+                : AppColors.surface,
             borderRadius: BorderRadius.circular(AppRadius.lg),
             border: Border.all(
-              color: _hover ? AppColors.primary.withValues(alpha: .25) : AppColors.border,
+              color: _hover
+                  ? AppColors.primary.withValues(alpha: .25)
+                  : AppColors.border,
             ),
           ),
           child: Row(
@@ -302,7 +361,9 @@ class _RelatedPostTileState extends State<_RelatedPostTile> {
                     const SizedBox(height: 6),
                     Text(
                       widget.post.title,
-                      style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
@@ -311,7 +372,10 @@ class _RelatedPostTileState extends State<_RelatedPostTile> {
               AnimatedSlide(
                 duration: const Duration(milliseconds: 200),
                 offset: Offset(_hover ? .15 : 0, 0),
-                child: Icon(Icons.arrow_forward_rounded, color: AppColors.primary),
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: AppColors.primary,
+                ),
               ),
             ],
           ),

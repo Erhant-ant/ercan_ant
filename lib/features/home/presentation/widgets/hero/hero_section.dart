@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:ercan_ant/app/theme/app_colors.dart';
 import 'package:ercan_ant/app/theme/app_spacing.dart';
 import 'package:ercan_ant/features/home/presentation/widgets/hero/hero_book.dart';
 import 'package:ercan_ant/features/home/presentation/widgets/hero/hero_content.dart';
@@ -19,7 +20,11 @@ class HeroSection extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xffFCF8F1), Color(0xffF8F3EB), Color(0xffF3ECE2)],
+              colors: [
+                AppColors.gradientStart,
+                AppColors.gradientMiddle,
+                AppColors.gradientEnd,
+              ],
             ),
           ),
           child: Stack(

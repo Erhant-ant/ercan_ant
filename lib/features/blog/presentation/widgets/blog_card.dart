@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ercan_ant/app/theme/app_colors.dart';
 import 'package:ercan_ant/app/theme/app_radius.dart';
 import 'package:ercan_ant/features/blog/domain/blog_post.dart';
+import 'package:ercan_ant/shared/utils/date_extensions.dart';
 
 class BlogCard extends StatefulWidget {
   const BlogCard({super.key, required this.post, required this.onTap});
@@ -16,14 +17,6 @@ class BlogCard extends StatefulWidget {
 
 class _BlogCardState extends State<BlogCard> {
   bool _hover = false;
-
-  String _formatDate(DateTime date) {
-    const months = [
-      'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-      'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
-    ];
-    return '${date.day} ${months[date.month - 1]} ${date.year}';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +37,9 @@ class _BlogCardState extends State<BlogCard> {
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(AppRadius.xl),
             border: Border.all(
-              color: _hover ? AppColors.primary.withValues(alpha: .35) : AppColors.border,
+              color: _hover
+                  ? AppColors.primary.withValues(alpha: .35)
+                  : AppColors.border,
             ),
             boxShadow: [
               BoxShadow(
@@ -60,11 +55,16 @@ class _BlogCardState extends State<BlogCard> {
             children: [
               // Kategori etiketi
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: .08),
                   borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: AppColors.primary.withValues(alpha: .15)),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: .15),
+                  ),
                 ),
                 child: Text(
                   post.category,
@@ -86,7 +86,11 @@ class _BlogCardState extends State<BlogCard> {
                   color: _hover ? AppColors.primary : AppColors.textPrimary,
                   height: 1.35,
                 ),
-                child: Text(post.title, maxLines: 2, overflow: TextOverflow.ellipsis),
+                child: Text(
+                  post.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
 
               const SizedBox(height: 14),
@@ -112,18 +116,30 @@ class _BlogCardState extends State<BlogCard> {
               // Alt bilgi: tarih + okuma süresi
               Row(
                 children: [
-                  Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textSecondary),
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 14,
+                    color: AppColors.textSecondary,
+                  ),
                   const SizedBox(width: 6),
                   Text(
-                    _formatDate(post.date),
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                    post.date.toTurkishFormat(),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   const Spacer(),
-                  Icon(Icons.schedule_outlined, size: 14, color: AppColors.textSecondary),
+                  Icon(
+                    Icons.schedule_outlined,
+                    size: 14,
+                    color: AppColors.textSecondary,
+                  ),
                   const SizedBox(width: 6),
                   Text(
                     '${post.readingMinutes} dk okuma',
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
 
                   const SizedBox(width: 16),
