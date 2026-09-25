@@ -35,86 +35,95 @@ class _HeroBookState extends State<HeroBook>
   Widget build(BuildContext context) {
     final primary = Theme.of(context).colorScheme.primary;
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        final floating = math.sin(_controller.value * math.pi * 2) * 8;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : 340.0;
+        final cardWidth = ((availableWidth - 24) * .9).clamp(216.0, 306.0);
+        final imageHeight = cardWidth * 1.5;
+        final cardHeight = imageHeight + 210;
+        final glowSize = cardWidth + (_hover ? 130 : 80);
 
-        return MouseRegion(
-          cursor: SystemMouseCursors.precise,
-          onEnter: (_) => setState(() => _hover = true),
-          onExit: (_) => setState(() => _hover = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOut,
-            transform: Matrix4.translationValues(
-              0,
-              floating + (_hover ? -8 : 0),
-              0,
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Glow efekti
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  width: _hover ? 470 : 420,
-                  height: _hover ? 470 : 420,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(500),
-                    gradient: RadialGradient(
-                      colors: [
-                        primary.withValues(alpha: .18),
-                        primary.withValues(alpha: .07),
-                        Colors.transparent,
-                      ],
-                      stops: const [.10, .45, 1],
-                    ),
-                  ),
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final floating = math.sin(_controller.value * math.pi * 2) * 8;
+
+            return MouseRegion(
+              cursor: SystemMouseCursors.precise,
+              onEnter: (_) => setState(() => _hover = true),
+              onExit: (_) => setState(() => _hover = false),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOut,
+                transform: Matrix4.translationValues(
+                  0,
+                  floating + (_hover ? -8 : 0),
+                  0,
                 ),
-
-                // Kitap kartı
-                AnimatedScale(
-                  duration: const Duration(milliseconds: 250),
-                  scale: _hover ? 1.05 : 1,
-                  child: Transform.rotate(
-                    angle: _hover ? -.015 : -.035,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 220),
-                      width: 340,
-                      height: 500,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Glow efekti
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      width: glowSize,
+                      height: glowSize,
                       decoration: BoxDecoration(
-                        color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(22),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: .18),
-                            blurRadius: _hover ? 80 : 60,
-                            spreadRadius: _hover ? 8 : 2,
-                            offset: Offset(0, _hover ? 40 : 30),
-                          ),
-                        ],
+                        borderRadius: BorderRadius.circular(500),
+                        gradient: RadialGradient(
+                          colors: [
+                            primary.withValues(alpha: .18),
+                            primary.withValues(alpha: .07),
+                            Colors.transparent,
+                          ],
+                          stops: const [.10, .45, 1],
+                        ),
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(22),
-                        child: Column(
-                          children: [
-                            // Üst resim alanı
-                            Expanded(
-                              flex: 7,
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(22),
-                                  topRight: Radius.circular(22),
-                                ),
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    Image.asset(
-                                      'assets/books/hero_book.jpg',
-                                      fit: BoxFit.cover,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
+                    ),
+
+                    // Kitap kartı
+                    AnimatedScale(
+                      duration: const Duration(milliseconds: 250),
+                      scale: _hover ? 1.05 : 1,
+                      child: Transform.rotate(
+                        angle: _hover ? -.015 : -.035,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 220),
+                          width: cardWidth,
+                          height: cardHeight,
+                          decoration: BoxDecoration(
+                            color: AppColors.surface,
+                            borderRadius: BorderRadius.circular(22),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: .18),
+                                blurRadius: _hover ? 80 : 60,
+                                spreadRadius: _hover ? 8 : 2,
+                                offset: Offset(0, _hover ? 40 : 30),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(22),
+                            child: Column(
+                              children: [
+                                // Üst resim alanı
+                                SizedBox(
+                                  height: imageHeight,
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(22),
+                                      topRight: Radius.circular(22),
+                                    ),
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.asset(
+                                          'assets/books/hero_book.jpg',
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) {
                                             return Container(
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
@@ -173,92 +182,97 @@ class _HeroBookState extends State<HeroBook>
                                               ),
                                             );
                                           },
-                                    ),
+                                        ),
 
-                                    // Karartma overlay
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Colors.transparent,
-                                            Colors.black.withValues(alpha: .28),
-                                          ],
+                                        // Karartma overlay
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Colors.transparent,
+                                                Colors.black.withValues(
+                                                  alpha: .28,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
 
-                            // Alt bilgi alanı
-                            Expanded(
-                              flex: 3,
-                              child: SingleChildScrollView(
-                                padding: const EdgeInsets.all(24),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      'Bir Göç ve Aidiyet Hikâyesi',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.primary,
-                                            fontSize: 18,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'Ömer\'in bilinmezliğe uzanan tren yolculuğunda, umudun ve acının sessiz yankılarına tanık olun.',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            height: 1.5,
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14,
-                                          ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    FilledButton.icon(
-                                      style: FilledButton.styleFrom(
-                                        minimumSize: const Size(
-                                          double.infinity,
-                                          52,
+                                // Alt bilgi alanı
+                                Expanded(
+                                  flex: 3,
+                                  child: SingleChildScrollView(
+                                    padding: const EdgeInsets.all(24),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Bir Göç ve Aidiyet Hikâyesi',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.primary,
+                                                fontSize: 18,
+                                              ),
                                         ),
-                                        backgroundColor: AppColors.primary,
-                                        foregroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            14,
-                                          ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Ömer\'in bilinmezliğe uzanan tren yolculuğunda, umudun ve acının sessiz yankılarına tanık olun.',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium
+                                              ?.copyWith(
+                                                height: 1.5,
+                                                color: AppColors.textSecondary,
+                                                fontSize: 14,
+                                              ),
                                         ),
-                                      ),
-                                      onPressed: () => context.go('/kitaplar'),
-                                      icon: const Icon(
-                                        Icons.menu_book_outlined,
-                                      ),
-                                      label: const Text('Hikâyeyi Keşfet'),
+                                        const SizedBox(height: 20),
+                                        FilledButton.icon(
+                                          style: FilledButton.styleFrom(
+                                            minimumSize: const Size(
+                                              double.infinity,
+                                              52,
+                                            ),
+                                            backgroundColor: AppColors.primary,
+                                            foregroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              context.go('/kitaplar'),
+                                          icon: const Icon(
+                                            Icons.menu_book_outlined,
+                                          ),
+                                          label: const Text('Hikâyeyi Keşfet'),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
