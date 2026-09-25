@@ -18,10 +18,7 @@ class AppFooter extends StatelessWidget {
       color: AppColors.footerBackground,
       child: AppLayout(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 48,
-            vertical: AppSpacing.huge,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 26),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 750;
@@ -48,7 +45,7 @@ class _DesktopFooter extends StatelessWidget {
           children: [
             // Sol: Marka
             Expanded(flex: 4, child: _BrandColumn(theme: theme)),
-            const SizedBox(width: 48),
+            const SizedBox(width: 20),
 
             // Orta: Navigasyon
             Expanded(
@@ -64,7 +61,7 @@ class _DesktopFooter extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 48),
+            const SizedBox(width: 20),
 
             // Sağ: İletişim
             Expanded(flex: 3, child: _ContactColumn(theme: theme)),
@@ -75,6 +72,8 @@ class _DesktopFooter extends StatelessWidget {
         _Divider(),
         const SizedBox(height: AppSpacing.lg),
         _CopyrightRow(theme: theme),
+        const SizedBox(height: AppSpacing.md),
+        _StudioCredit(theme: theme),
       ],
     );
   }
@@ -89,7 +88,7 @@ class _MobileFooter extends StatelessWidget {
     return Column(
       children: [
         _BrandColumn(theme: theme),
-        const SizedBox(height: 40),
+        const SizedBox(height: 16),
         _LinksColumn(
           title: 'Bölümler',
           theme: theme,
@@ -100,12 +99,14 @@ class _MobileFooter extends StatelessWidget {
             _FooterLink(label: 'Hakkında', route: '/hakkinda'),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 16),
         _ContactColumn(theme: theme),
         const SizedBox(height: AppSpacing.xxl),
         _Divider(),
         const SizedBox(height: AppSpacing.lg),
         _CopyrightRow(theme: theme),
+        const SizedBox(height: AppSpacing.md),
+        _StudioCredit(theme: theme),
       ],
     );
   }
@@ -122,7 +123,7 @@ class _BrandColumn extends StatelessWidget {
       children: [
         Text(
           'ERCAN ANT',
-          style: theme.textTheme.headlineMedium?.copyWith(
+          style: theme.textTheme.headlineSmall?.copyWith(
             color: Colors.white,
             fontWeight: FontWeight.w800,
             letterSpacing: 3,
@@ -140,7 +141,7 @@ class _BrandColumn extends StatelessWidget {
         Container(width: 50, height: 3, color: AppColors.secondary),
         const SizedBox(height: 20),
         SizedBox(
-          width: 300,
+          width: 280,
           child: Text(
             'Kelimelerin bıraktığı izleri takip edin. Edebiyatın sıcaklığında buluşalım.',
             style: theme.textTheme.bodyMedium?.copyWith(
@@ -153,7 +154,11 @@ class _BrandColumn extends StatelessWidget {
         // Sosyal medya ikonları
         Row(
           children: [
-            _SocialIcon(icon: Icons.auto_stories_rounded, tooltip: 'Goodreads'),
+            _SocialIcon(
+              icon: Icons.auto_stories_rounded,
+              tooltip: 'Goodreads',
+              url: 'https://www.goodreads.com/search?q=Ercan+Ant',
+            ),
             const SizedBox(width: 12),
             _SocialIcon(
               icon: Icons.alternate_email_rounded,
@@ -161,7 +166,11 @@ class _BrandColumn extends StatelessWidget {
               url: 'https://www.instagram.com/ercanantt/',
             ),
             const SizedBox(width: 12),
-            _SocialIcon(icon: Icons.language_rounded, tooltip: 'Twitter / X'),
+            _SocialIcon(
+              icon: Icons.language_rounded,
+              tooltip: 'Twitter / X',
+              url: 'https://x.com/search?q=Ercan%20Ant&src=typed_query',
+            ),
           ],
         ),
       ],
@@ -194,20 +203,20 @@ class _SocialIconState extends State<_SocialIcon> {
           onTap: widget.url == null ? null : () => _openUrl(widget.url!),
           borderRadius: BorderRadius.circular(12),
           child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 42,
-          height: 42,
-          decoration: BoxDecoration(
-            color: _hover
-                ? AppColors.primary
-                : Colors.white.withValues(alpha: .08),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
+            duration: const Duration(milliseconds: 200),
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
               color: _hover
                   ? AppColors.primary
-                  : Colors.white.withValues(alpha: .12),
+                  : Colors.white.withValues(alpha: .08),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: _hover
+                    ? AppColors.primary
+                    : Colors.white.withValues(alpha: .12),
+              ),
             ),
-          ),
             child: Icon(
               widget.icon,
               size: 18,
@@ -282,7 +291,13 @@ class _FooterNavItemState extends State<_FooterNavItem> {
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
       child: GestureDetector(
-        onTap: () => context.go(widget.link.route),
+        onTap: () {
+          if (widget.link.route == '/kitaplar') {
+            context.go('/kitaplar', extra: true);
+          } else {
+            context.go(widget.link.route);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 7),
           child: AnimatedDefaultTextStyle(
@@ -356,7 +371,13 @@ class _ContactColumn extends StatelessWidget {
       children: [
         Icon(icon, size: 16, color: Colors.white38),
         const SizedBox(width: 10),
-        Text(text, style: const TextStyle(color: Colors.white60, fontSize: 14)),
+        Expanded(
+          child: Text(
+            text,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.white60, fontSize: 14),
+          ),
+        ),
       ],
     );
   }
@@ -402,5 +423,38 @@ class _CopyrightRow extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _StudioCredit extends StatelessWidget {
+  const _StudioCredit({required this.theme});
+
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: InkWell(
+        onTap: () => _openStudioSite(),
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Text(
+            'Created by Eant Studio',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: Colors.white38,
+              letterSpacing: .4,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openStudioSite() async {
+    final uri = Uri.parse('https://erhant-ant.github.io/erhan_ant_portfolio/');
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
