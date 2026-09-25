@@ -21,9 +21,7 @@ class AppNavbar extends StatelessWidget {
     final isDesktop = width >= _kDesktopBreakpoint;
 
     // Mobilde yatay padding ekranın %5'i, en az 16, en fazla 60
-    final hPadding = isDesktop
-        ? 60.0
-        : (width * 0.05).clamp(16.0, 60.0);
+    final hPadding = isDesktop ? 60.0 : (width * 0.05).clamp(16.0, 60.0);
 
     final navbarHeight = isDesktop ? 72.0 : 60.0;
 
@@ -34,7 +32,7 @@ class AppNavbar extends StatelessWidget {
           height: navbarHeight,
           padding: EdgeInsets.symmetric(horizontal: hPadding),
           decoration: BoxDecoration(
-            color: AppColors.background.withValues(alpha: .82),
+            color: AppColors.background.withValues(alpha: .75),
             border: Border(bottom: BorderSide(color: AppColors.border)),
             boxShadow: [
               BoxShadow(
@@ -54,11 +52,11 @@ class AppNavbar extends StatelessWidget {
                   child: Text(
                     'ERCAN ANT',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          letterSpacing: isDesktop ? 3 : 2,
-                          fontSize: isDesktop ? null : 18,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
+                      letterSpacing: isDesktop ? 3 : 2,
+                      fontSize: isDesktop ? null : 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ),
               ),
@@ -67,11 +65,7 @@ class AppNavbar extends StatelessWidget {
 
               if (isDesktop) ...[
                 // Masaüstü nav linkleri
-                _NavItem(
-                  label: 'Ana Sayfa',
-                  route: '/',
-                  onScrollToBooks: null,
-                ),
+                _NavItem(label: 'Ana Sayfa', route: '/', onScrollToBooks: null),
                 const SizedBox(width: 8),
                 _NavItem(
                   label: 'Kitaplar',
@@ -195,9 +189,9 @@ class _NavItemState extends State<_NavItem> {
               AnimatedDefaultTextStyle(
                 duration: const Duration(milliseconds: 220),
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontWeight: hover ? FontWeight.w700 : FontWeight.w500,
-                      color: hover ? AppColors.primary : AppColors.textSecondary,
-                    ),
+                  fontWeight: hover ? FontWeight.w700 : FontWeight.w500,
+                  color: hover ? AppColors.primary : AppColors.textSecondary,
+                ),
                 child: Text(widget.label),
               ),
               const SizedBox(height: 6),
@@ -347,9 +341,9 @@ class _MobileMenuItem extends StatelessWidget {
             Text(
               label,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
             ),
             const Spacer(),
             Icon(

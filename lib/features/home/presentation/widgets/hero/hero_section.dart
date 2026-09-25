@@ -6,7 +6,9 @@ import 'package:ercan_ant/features/home/presentation/widgets/hero/hero_book.dart
 import 'package:ercan_ant/features/home/presentation/widgets/hero/hero_content.dart';
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
+  const HeroSection({super.key, required this.navbarHeight});
+
+  final double navbarHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class HeroSection extends StatelessWidget {
                   height: 420,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xffD8C6A3).withValues(alpha: .08),
+                    color: AppColors.heroBlob1.withValues(alpha: .08),
                   ),
                 ),
               ),
@@ -50,7 +52,7 @@ class HeroSection extends StatelessWidget {
                   height: 520,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xffB89362).withValues(alpha: .06),
+                    color: AppColors.heroBlob2.withValues(alpha: .06),
                   ),
                 ),
               ),
@@ -59,11 +61,11 @@ class HeroSection extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1450),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile
-                          ? AppSpacing.xl
-                          : AppSpacing.xxxl * 1.5,
-                      vertical: isMobile ? 56 : 72,
+                    padding: EdgeInsets.only(
+                      left: isMobile ? AppSpacing.xl : AppSpacing.xxxl * 1.5,
+                      right: isMobile ? AppSpacing.xl : AppSpacing.xxxl * 1.5,
+                      top: (isMobile ? 56 : 72) + navbarHeight,
+                      bottom: isMobile ? 56 : 72,
                     ),
                     child: isMobile
                         ? const Column(

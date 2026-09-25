@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:ercan_ant/app/theme/app_colors.dart';
+
 class HeroBackground extends StatelessWidget {
   const HeroBackground({super.key, required this.child});
 
@@ -8,11 +10,15 @@ class HeroBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xffFCFBF8), Color(0xffffffff), Color(0xffF7F3EC)],
+          colors: [
+            AppColors.gradientStart,
+            Colors.white,
+            AppColors.gradientEnd,
+          ],
         ),
       ),
       child: child,

@@ -14,10 +14,13 @@ class AppFooter extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: const Color(0xFF2A1F14),
+      color: AppColors.footerBackground,
       child: AppLayout(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: AppSpacing.huge),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 48,
+            vertical: AppSpacing.huge,
+          ),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final isMobile = constraints.maxWidth < 750;
@@ -47,12 +50,19 @@ class _DesktopFooter extends StatelessWidget {
             const SizedBox(width: 48),
 
             // Orta: Navigasyon
-            Expanded(flex: 2, child: _LinksColumn(title: 'Bölümler', theme: theme, links: const [
-              _FooterLink(label: 'Ana Sayfa', route: '/'),
-              _FooterLink(label: 'Kitaplar', route: '/kitaplar'),
-              _FooterLink(label: 'Yazarın Defteri', route: '/blog'),
-              _FooterLink(label: 'Hakkında', route: '/hakkinda'),
-            ])),
+            Expanded(
+              flex: 2,
+              child: _LinksColumn(
+                title: 'Bölümler',
+                theme: theme,
+                links: const [
+                  _FooterLink(label: 'Ana Sayfa', route: '/'),
+                  _FooterLink(label: 'Kitaplar', route: '/kitaplar'),
+                  _FooterLink(label: 'Yazarın Defteri', route: '/blog'),
+                  _FooterLink(label: 'Hakkında', route: '/hakkinda'),
+                ],
+              ),
+            ),
             const SizedBox(width: 48),
 
             // Sağ: İletişim
@@ -79,12 +89,16 @@ class _MobileFooter extends StatelessWidget {
       children: [
         _BrandColumn(theme: theme),
         const SizedBox(height: 40),
-        _LinksColumn(title: 'Bölümler', theme: theme, links: const [
-          _FooterLink(label: 'Ana Sayfa', route: '/'),
-          _FooterLink(label: 'Kitaplar', route: '/kitaplar'),
-          _FooterLink(label: 'Yazarın Defteri', route: '/blog'),
-          _FooterLink(label: 'Hakkında', route: '/hakkinda'),
-        ]),
+        _LinksColumn(
+          title: 'Bölümler',
+          theme: theme,
+          links: const [
+            _FooterLink(label: 'Ana Sayfa', route: '/'),
+            _FooterLink(label: 'Kitaplar', route: '/kitaplar'),
+            _FooterLink(label: 'Yazarın Defteri', route: '/blog'),
+            _FooterLink(label: 'Hakkında', route: '/hakkinda'),
+          ],
+        ),
         const SizedBox(height: 40),
         _ContactColumn(theme: theme),
         const SizedBox(height: AppSpacing.xxl),
@@ -140,7 +154,10 @@ class _BrandColumn extends StatelessWidget {
           children: [
             _SocialIcon(icon: Icons.auto_stories_rounded, tooltip: 'Goodreads'),
             const SizedBox(width: 12),
-            _SocialIcon(icon: Icons.alternate_email_rounded, tooltip: 'Instagram'),
+            _SocialIcon(
+              icon: Icons.alternate_email_rounded,
+              tooltip: 'Instagram',
+            ),
             const SizedBox(width: 12),
             _SocialIcon(icon: Icons.language_rounded, tooltip: 'Twitter / X'),
           ],
@@ -175,9 +192,15 @@ class _SocialIconState extends State<_SocialIcon> {
           width: 42,
           height: 42,
           decoration: BoxDecoration(
-            color: _hover ? AppColors.primary : Colors.white.withValues(alpha: .08),
+            color: _hover
+                ? AppColors.primary
+                : Colors.white.withValues(alpha: .08),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: _hover ? AppColors.primary : Colors.white.withValues(alpha: .12)),
+            border: Border.all(
+              color: _hover
+                  ? AppColors.primary
+                  : Colors.white.withValues(alpha: .12),
+            ),
           ),
           child: Icon(
             widget.icon,
@@ -197,7 +220,11 @@ class _FooterLink {
 }
 
 class _LinksColumn extends StatelessWidget {
-  const _LinksColumn({required this.title, required this.theme, required this.links});
+  const _LinksColumn({
+    required this.title,
+    required this.theme,
+    required this.links,
+  });
   final String title;
   final ThemeData theme;
   final List<_FooterLink> links;
@@ -288,7 +315,11 @@ class _ContactColumn extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(Icons.notifications_none_rounded, size: 20, color: AppColors.secondary),
+              Icon(
+                Icons.notifications_none_rounded,
+                size: 20,
+                color: AppColors.secondary,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(

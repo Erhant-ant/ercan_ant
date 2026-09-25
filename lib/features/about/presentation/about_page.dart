@@ -14,32 +14,25 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final width = MediaQuery.sizeOf(context).width;
+    final navbarHeight = width >= 900 ? 72.0 : 60.0;
 
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          const AppNavbar(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Hero bölümü
-                  _AboutHero(theme: theme),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                _AboutHero(theme: theme, navbarHeight: navbarHeight),
 
-                  // Biyografi bölümü
-                  _BiographySection(theme: theme),
-
-                  // Alıntı bölümü
-                  _QuoteSection(theme: theme),
-
-                  // Kitaplarım bölümü
-                  _BooksCTA(theme: theme),
-
-                  const AppFooter(),
-                ],
-              ),
+                _BiographySection(theme: theme),
+                _QuoteSection(theme: theme),
+                _BooksCTA(theme: theme),
+                const AppFooter(),
+              ],
             ),
           ),
+          const Positioned(top: 0, left: 0, right: 0, child: AppNavbar()),
         ],
       ),
     );
@@ -47,19 +40,29 @@ class AboutPage extends StatelessWidget {
 }
 
 class _AboutHero extends StatelessWidget {
-  const _AboutHero({required this.theme});
+  const _AboutHero({required this.theme, required this.navbarHeight});
   final ThemeData theme;
+  final double navbarHeight;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 32),
+      padding: EdgeInsets.only(
+        top: 90 + navbarHeight,
+        bottom: 90,
+        left: 32,
+        right: 32,
+      ),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xffFCF8F1), Color(0xffF8F3EB), Color(0xffF3ECE2)],
+          colors: [
+            AppColors.gradientStart,
+            AppColors.gradientMiddle,
+            AppColors.gradientEnd,
+          ],
         ),
       ),
       child: AppLayout(
@@ -96,13 +99,17 @@ class _AuthorAvatar extends StatefulWidget {
   State<_AuthorAvatar> createState() => _AuthorAvatarState();
 }
 
-class _AuthorAvatarState extends State<_AuthorAvatar> with SingleTickerProviderStateMixin {
+class _AuthorAvatarState extends State<_AuthorAvatar>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(seconds: 5))..repeat(reverse: true);
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat(reverse: true);
   }
 
   @override
@@ -144,7 +151,10 @@ class _AuthorAvatarState extends State<_AuthorAvatar> with SingleTickerProviderS
                 height: 280,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary.withValues(alpha: .3), width: 3),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: .3),
+                    width: 3,
+                  ),
                   boxShadow: [
                     BoxShadow(
                       color: AppColors.primary.withValues(alpha: .15),
@@ -167,10 +177,11 @@ class _AuthorAvatarState extends State<_AuthorAvatar> with SingleTickerProviderS
                         const SizedBox(height: 4),
                         Text(
                           'ERCAN ANT',
-                          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: AppColors.primary.withValues(alpha: .7),
-                            letterSpacing: 2,
-                          ),
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(
+                                color: AppColors.primary.withValues(alpha: .7),
+                                letterSpacing: 2,
+                              ),
                         ),
                       ],
                     ),
@@ -183,7 +194,10 @@ class _AuthorAvatarState extends State<_AuthorAvatar> with SingleTickerProviderS
                 bottom: 50,
                 right: 30,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(20),
@@ -198,7 +212,11 @@ class _AuthorAvatarState extends State<_AuthorAvatar> with SingleTickerProviderS
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.auto_stories_rounded, size: 16, color: Colors.white),
+                      const Icon(
+                        Icons.auto_stories_rounded,
+                        size: 16,
+                        color: Colors.white,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         'Yazar',
@@ -239,7 +257,11 @@ class _HeroText extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.person_outline_rounded, size: 16, color: AppColors.primary),
+              Icon(
+                Icons.person_outline_rounded,
+                size: 16,
+                color: AppColors.primary,
+              ),
               const SizedBox(width: 8),
               Text(
                 'Hakkında',
@@ -264,13 +286,23 @@ class _HeroText extends StatelessWidget {
 
         const SizedBox(height: 20),
 
-        Container(width: 70, height: 4, decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10))),
+        Container(
+          width: 70,
+          height: 4,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
 
         const SizedBox(height: 26),
 
         Text(
           'Roman yazarı. Umudun, aidiyetin ve göçün sessiz yankılarını kelimelere döken biri.',
-          style: theme.textTheme.bodyLarge?.copyWith(height: 1.85, color: AppColors.textPrimary),
+          style: theme.textTheme.bodyLarge?.copyWith(
+            height: 1.85,
+            color: AppColors.textPrimary,
+          ),
         ),
 
         const SizedBox(height: 18),
@@ -281,7 +313,10 @@ class _HeroText extends StatelessWidget {
           runSpacing: 12,
           children: [
             _SocialChip(icon: Icons.book_outlined, label: 'Goodreads'),
-            _SocialChip(icon: Icons.alternate_email_rounded, label: 'Instagram'),
+            _SocialChip(
+              icon: Icons.alternate_email_rounded,
+              label: 'Instagram',
+            ),
             _SocialChip(icon: Icons.language_rounded, label: 'Twitter / X'),
           ],
         ),
@@ -314,12 +349,18 @@ class _SocialChipState extends State<_SocialChip> {
         decoration: BoxDecoration(
           color: _hover ? AppColors.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(AppRadius.md),
-          border: Border.all(color: _hover ? AppColors.primary : AppColors.border),
+          border: Border.all(
+            color: _hover ? AppColors.primary : AppColors.border,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(widget.icon, size: 16, color: _hover ? Colors.white : AppColors.textSecondary),
+            Icon(
+              widget.icon,
+              size: 16,
+              color: _hover ? Colors.white : AppColors.textSecondary,
+            ),
             const SizedBox(width: 8),
             Text(
               widget.label,
@@ -343,7 +384,10 @@ class _BiographySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.surface,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.giant, horizontal: 32),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.giant,
+        horizontal: 32,
+      ),
       child: AppLayout(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -354,17 +398,27 @@ class _BiographySection extends StatelessWidget {
               children: [
                 Text(
                   'Hayat ve Edebiyat Yolculuğu',
-                  style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 28),
-                _para(theme,
-                    'Ercan Ant, insanın iç dünyasını ve toplumsal bağlarını konu alan romanlarıyla edebiyat dünyasında sesini duyurmuş bir yazardır. Yazılarında umut, aidiyet ve göç gibi evrensel temaları işler; okuyucuyu farklı hayatların içine çeker.'),
-                _para(theme,
-                    'İlk romanı "Zemheride Açan Nergisler", yayımlandığı günden bu yana büyük ilgi görmüş; hem eleştirmenler hem de okuyucular tarafından güçlü bir edebî ses olarak değerlendirilmiştir. Roman, insan ruhunun karanlık ve aydınlık yönlerini ustalıkla dengeleyen bir anlatı yapısına sahiptir.'),
-                _para(theme,
-                    'Yazma sürecinde hayatın sıradan anlarından beslenen Ant, her karakterinin gerçek ve bütünlüklü hissetmesi için derinlemesine araştırma yapar. "Her karakter, bir insanın içinde yaşayan başka bir insan" anlayışıyla yaklaşır yazmaya.'),
-                _para(theme,
-                    'Yeni romanı üzerindeki çalışmalarını sürdürmekte olan Ercan Ant, "Yazarın Defteri" bölümünde yazma sürecine dair notlarını, düşüncelerini ve okuma tavsiyelerini paylaşmaktadır.'),
+                _para(
+                  theme,
+                  'Ercan Ant, insanın iç dünyasını ve toplumsal bağlarını konu alan romanlarıyla edebiyat dünyasında sesini duyurmuş bir yazardır. Yazılarında umut, aidiyet ve göç gibi evrensel temaları işler; okuyucuyu farklı hayatların içine çeker.',
+                ),
+                _para(
+                  theme,
+                  'İlk romanı "Zemheride Açan Nergisler", yayımlandığı günden bu yana büyük ilgi görmüş; hem eleştirmenler hem de okuyucular tarafından güçlü bir edebî ses olarak değerlendirilmiştir. Roman, insan ruhunun karanlık ve aydınlık yönlerini ustalıkla dengeleyen bir anlatı yapısına sahiptir.',
+                ),
+                _para(
+                  theme,
+                  'Yazma sürecinde hayatın sıradan anlarından beslenen Ant, her karakterinin gerçek ve bütünlüklü hissetmesi için derinlemesine araştırma yapar. "Her karakter, bir insanın içinde yaşayan başka bir insan" anlayışıyla yaklaşır yazmaya.',
+                ),
+                _para(
+                  theme,
+                  'Yeni romanı üzerindeki çalışmalarını sürdürmekte olan Ercan Ant, "Yazarın Defteri" bölümünde yazma sürecine dair notlarını, düşüncelerini ve okuma tavsiyelerini paylaşmaktadır.',
+                ),
               ],
             );
 
@@ -400,9 +454,15 @@ class _BiographySection extends StatelessWidget {
   }
 
   Widget _para(ThemeData theme, String text) => Padding(
-        padding: const EdgeInsets.only(bottom: 22),
-        child: Text(text, style: theme.textTheme.bodyLarge?.copyWith(height: 1.9, color: AppColors.textPrimary)),
-      );
+    padding: const EdgeInsets.only(bottom: 22),
+    child: Text(
+      text,
+      style: theme.textTheme.bodyLarge?.copyWith(
+        height: 1.9,
+        color: AppColors.textPrimary,
+      ),
+    ),
+  );
 }
 
 class _StatCard extends StatelessWidget {
@@ -435,7 +495,10 @@ class _StatCard extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, height: 1.5),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: AppColors.textSecondary,
+              height: 1.5,
+            ),
           ),
         ],
       ),
@@ -451,7 +514,10 @@ class _QuoteSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.huge, horizontal: 32),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.huge,
+        horizontal: 32,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -459,7 +525,7 @@ class _QuoteSection extends StatelessWidget {
           colors: [
             AppColors.primary,
             AppColors.primary.withValues(alpha: .85),
-            const Color(0xff6B4E2E),
+            AppColors.primaryDark,
           ],
         ),
       ),
@@ -468,7 +534,11 @@ class _QuoteSection extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 800),
           child: Column(
             children: [
-              Icon(Icons.format_quote, size: 56, color: Colors.white.withValues(alpha: .4)),
+              Icon(
+                Icons.format_quote,
+                size: 56,
+                color: Colors.white.withValues(alpha: .4),
+              ),
               const SizedBox(height: 20),
               Text(
                 '"Her insan biraz gittiği yollar,\nbiraz da geride bıraktıklarıdır."',
@@ -504,13 +574,18 @@ class _BooksCTA extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.backgroundSecondary,
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.huge, horizontal: 32),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.huge,
+        horizontal: 32,
+      ),
       child: Center(
         child: Column(
           children: [
             Text(
               'Eserlerimi Keşfedin',
-              style: theme.textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w700),
+              style: theme.textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
             const SizedBox(height: 16),
             SizedBox(
@@ -518,7 +593,10 @@ class _BooksCTA extends StatelessWidget {
               child: Text(
                 'Romanlarım ve yakında çıkacak eserlerim hakkında daha fazla bilgi almak için kitaplar sayfasını ziyaret edin.',
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyLarge?.copyWith(height: 1.8, color: AppColors.textSecondary),
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  height: 1.8,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
             const SizedBox(height: 36),
@@ -533,7 +611,9 @@ class _BooksCTA extends StatelessWidget {
                   label: const Text('Kitapları Gör'),
                   style: FilledButton.styleFrom(
                     minimumSize: const Size(200, 54),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.lg)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                    ),
                   ),
                 ),
                 OutlinedButton.icon(
@@ -542,7 +622,9 @@ class _BooksCTA extends StatelessWidget {
                   label: const Text('Yazarın Defteri'),
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(200, 54),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadius.lg)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                    ),
                   ),
                 ),
               ],

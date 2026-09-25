@@ -38,8 +38,16 @@ class _HomePageState extends State<HomePage> {
   void _scrollToBooks() {
     final ctx = _booksSectionKey.currentContext;
     if (ctx == null) return;
-    Scrollable.ensureVisible(
-      ctx,
+    final renderObject = ctx.findRenderObject();
+    if (renderObject is! RenderBox) return;
+
+    final width = MediaQuery.sizeOf(context).width;
+    final navbarHeight = width >= 900 ? 72.0 : 60.0;
+    final offset = renderObject.localToGlobal(Offset.zero);
+    final targetY = _scrollController.offset + offset.dy - navbarHeight;
+
+    _scrollController.animateTo(
+      targetY.clamp(0.0, _scrollController.position.maxScrollExtent),
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
     );
@@ -53,28 +61,29 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final navbarHeight = width >= 900 ? 72.0 : 60.0;
+
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          AppNavbar(onScrollToBooks: scrollToBooks),
-
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  const HeroSection(),
-
-                  const AboutTeaser(),
-
-                  BooksSection(key: _booksSectionKey),
-
-                  const BlogTeaser(),
-
-                  const AppFooter(),
-                ],
-              ),
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                HeroSection(navbarHeight: navbarHeight),
+                const AboutTeaser(),
+                BooksSection(key: _booksSectionKey),
+                const BlogTeaser(),
+                const AppFooter(),
+              ],
             ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppNavbar(onScrollToBooks: scrollToBooks),
           ),
         ],
       ),
